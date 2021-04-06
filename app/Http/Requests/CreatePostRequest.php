@@ -13,7 +13,7 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:250'],
+            'description' => ['required', 'string'],
+            'page' => ['required', 'integer'],
+            'published_at' => ['required', 'date_format:Y-m-d', 'before:now'],
         ];
+    }
+
+    public function data()
+    {
+        return $this->only('title', 'description', 'page', 'published_at');
     }
 }
