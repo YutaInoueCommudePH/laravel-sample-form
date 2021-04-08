@@ -13,8 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@index');
-Route::group(['prefix' => 'post', 'as' => 'post.'], function() {
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'post', 'as' => 'post.', 'middleware' => ['auth']], function() {
     Route::get('/', 'PostController@index')->name('index');
     Route::get('/complete', 'PostController@complete')->name('complete');
 
